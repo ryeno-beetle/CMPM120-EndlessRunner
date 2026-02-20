@@ -14,12 +14,36 @@ class Load extends Phaser.Scene {
         this.load.image('bed', 'bed.png');
         this.load.image('bear', 'bear.png');
         this.load.image('bunny', 'bunny.png');
-        // load spritesheet
+        // load spritesheets
         this.load.spritesheet('thing', 'thing/thing_spritesheet.png', {
             frameWidth: 52,
             frameHeight: 75,
             startFrame: 0,
             endFrame: 5
+        });
+        this.load.spritesheet('bed_sheet', 'bed_bye/bed_bye_spritesheet.png', {
+            frameWidth: 192,
+            frameHeight: 102,
+            startFrame: 0,
+            endFrame: 12
+        });
+        this.load.spritesheet('pillows_sheet', 'pillows_bye/pillows_bye_spritesheet.png', {
+            frameWidth: 96,
+            frameHeight: 52,
+            startFrame: 0,
+            endFrame: 9
+        });
+        this.load.spritesheet('bear_sheet', 'bear_bye/bear_bye_spritesheet.png', {
+            frameWidth: 78,
+            frameHeight: 98,
+            startFrame: 0,
+            endFrame: 11
+        });
+        this.load.spritesheet('bunny_sheet', 'bunny_bye/bunny_bye_spritesheet.png', {
+            frameWidth: 68,
+            frameHeight: 34,
+            startFrame: 0,
+            endFrame: 9
         });
         // load bitmap font
         // original font from https://www.dafont.com/early-gameboy.font
@@ -27,6 +51,8 @@ class Load extends Phaser.Scene {
     }
 
     create() {
+        let bye_fr = 8;
+        let hi_fr = 32;
         // animation config
         this.anims.create({
             key: 'run',
@@ -43,6 +69,78 @@ class Load extends Phaser.Scene {
         this.anims.create({
             key: 'stop',
             frames: this.anims.generateFrameNumbers('thing', {start: 3, end: 3, first: 0}),
+            frameRate: 1,
+            repeat: -1
+        });
+
+        // bed
+        this.anims.create({
+            key: 'bed_bye',
+            frames: this.anims.generateFrameNumbers('bed_sheet', {start: 0, end: 12, first: 0}),
+            frameRate: bye_fr,
+        });
+        this.anims.create({
+            key: 'bed_hi',
+            frames: this.anims.generateFrameNumbers('bed_sheet', {start: 11, end: 0, first: 12}),
+            frameRate: hi_fr,
+        });
+        this.anims.create({
+            key: 'bed_still',
+            frames: this.anims.generateFrameNumbers('bed_sheet', {start: 0, end: 0, first: 0}),
+            frameRate: 1,
+            repeat: -1
+        });
+
+        // pillows
+        this.anims.create({
+            key: 'pillows_bye',
+            frames: this.anims.generateFrameNumbers('pillows_sheet', {start: 0, end: 9, first: 0}),
+            frameRate: bye_fr,
+        });
+        this.anims.create({
+            key: 'pillows_hi',
+            frames: this.anims.generateFrameNumbers('pillows_sheet', {start: 8, end: 0, first: 9}),
+            frameRate: hi_fr,
+        });
+        this.anims.create({
+            key: 'pillows_still',
+            frames: this.anims.generateFrameNumbers('pillows_sheet', {start: 0, end: 0, first: 0}),
+            frameRate: 1,
+            repeat: -1
+        });
+
+        // bear
+        this.anims.create({
+            key: 'bear_bye',
+            frames: this.anims.generateFrameNumbers('bear_sheet', {start: 0, end: 11, first: 0}),
+            frameRate: bye_fr,
+        });
+        this.anims.create({
+            key: 'bear_hi',
+            frames: this.anims.generateFrameNumbers('bear_sheet', {start: 10, end: 0, first: 11}),
+            frameRate: hi_fr,
+        });
+        this.anims.create({
+            key: 'bear_still',
+            frames: this.anims.generateFrameNumbers('bear_sheet', {start: 0, end: 0, first: 0}),
+            frameRate: 1,
+            repeat: -1
+        });
+
+        // bunny
+        this.anims.create({
+            key: 'bunny_bye',
+            frames: this.anims.generateFrameNumbers('bunny_sheet', {start: 0, end: 9, first: 0}),
+            frameRate: bye_fr,
+        });
+        this.anims.create({
+            key: 'bunny_hi',
+            frames: this.anims.generateFrameNumbers('bunny_sheet', {start: 8, end: 0, first: 9}),
+            frameRate: hi_fr,
+        });
+        this.anims.create({
+            key: 'bunny_still',
+            frames: this.anims.generateFrameNumbers('bunny_sheet', {start: 0, end: 0, first: 0}),
             frameRate: 1,
             repeat: -1
         });

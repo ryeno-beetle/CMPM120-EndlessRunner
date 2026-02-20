@@ -1,7 +1,9 @@
 // obstacles (bed/pillow)
 class Obstacle extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, texture) {
+    constructor(scene, x, y, texture, name) {
         super(scene, x, y, texture);
+
+        this.name = name;
 
         // add player to existing scene
         scene.add.existing(this);

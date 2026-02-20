@@ -112,9 +112,9 @@ class Play extends Phaser.Scene {
             for (let i = 0; i < obstacleArr.length; i++) {
                 // change obstacle speed
                 obstacleArr[i].setVelocityX(this.speed);
-                // fade if its past obstacle fade position
+                // play bye anim if it's past obstacle fade position
                 if (obstacleArr[i].x + obstacleArr[i].width > this.obstacleFadePosition && !obstacleArr[i].disappeared) {
-                    obstacleArr[i].alpha = 0.1;
+                    obstacleArr[i].anims.play(obstacleArr[i].name + "_bye");
                     obstacleArr[i].disappeared = true;
                 }
                 // destroy if it's off screen
@@ -158,20 +158,19 @@ class Play extends Phaser.Scene {
             let spawnTime = Phaser.Math.Between(this.spawnTimeMin, this.spawnTimeMax);
             let obstacleIndex = Phaser.Math.Between(0, this.obstacleKeys.length - 1);
             this.clock = this.time.delayedCall(spawnTime, () => {
-                let obs = new Obstacle(this, 0, 0, this.obstacleKeys[obstacleIndex]).setOrigin(0);
+                let obs = new Obstacle(this, 0, 0, this.obstacleKeys[obstacleIndex] + "_sheet", this.obstacleKeys[obstacleIndex]).setOrigin(0);
                 obs.setX( - obs.width - 10); // off the left side
                 obs.setY(config.height - obs.height - 50);
                 obs.setVelocityX(this.speed);
                 this.obstacleGroup.add(obs);
                 this.physics.add.collider(this.p, obs, () => {
+                    obs.anims.play(obs.name + "_still");
                     if (this.p.body.touching.left) {
                         // player hit obstacle
-                        console.log("AAAA");
-                        obs.alpha = 1;
-                        this.setGameOver();
+                        this.setGameOver()
+                        obs.anims.play(obs.name + "_hi");
+                        obs.on('animationcomplete', () => {this.showGameOverScreen()})
                     }
-                    // player has hit an obstacle
-                    console.log('ow');
                 })
                 this.spawnObstacleTimer();
             }, null, this);
@@ -188,6 +187,9 @@ class Play extends Phaser.Scene {
         for (let i = 0; i < obstacleArr.length; i++) {
             obstacleArr[i].setVelocity(0, 0);
         }
+    }
+
+    showGameOverScreen() {
         let rect = new Phaser.Geom.Rectangle(0, 0, config.width, config.height);
         let rect2 = new Phaser.Geom.Rectangle(0, 150, config.width, 200);
         this.graphics.fillStyle('0x120531', 0.5);

@@ -37,6 +37,7 @@
     -[] tweak spawn time of objects (change based on which one spawned?)
     -[] make energy bar, can only speed up when bar has energy? -> could use this to let u hold down the speed up button lol
     -[] would there be a way to scramble the colors on our obstacles for more variety without making a milliion versions manually?
+    -[] trip animation for thing
 */
 /* queer/crip time!
     obstacles are disappearing at a rate different from your own, faster than your own, casting you out of time, leaving you behind, making you fail
@@ -49,6 +50,7 @@
     - dark: 0b0657
     - light: fffdc6
 */
+// sprite sheet maker used: https://www.finalparsec.com/tools/sprite_sheet_maker
 let config = {
     type: Phaser.AUTO,
     width: 640,
