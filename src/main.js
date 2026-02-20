@@ -19,7 +19,7 @@
     -[] Have looping background music* (1)
     -[] Use a minimum of four sound effects for key mechanics, UI, and/or significant events appropriate to your game design (1)
     -[] Use randomness to generate escalating challenge, e.g. terrain, pickups, etc. (1)
-    -[] Include some metric of accomplishment that a player can improve over time, e.g., score, survival time, etc. (1)
+    -[x] Include some metric of accomplishment that a player can improve over time, e.g., score, survival time, etc. (1)
     -[x] Be theoretically endless (1)
     -[] Be playable for at least 15 seconds for a new player of low to moderate skill (1)
     -[] Run without significant crashes or errors (1)
@@ -32,9 +32,23 @@
 /* todo:
     -[] fix looping of bg art (floor)
     -[] make head bonk on right part of ceiling
+    -[] use bitmap text for frequently updating ui
+    -[] tweak params so speed increase feels good
+    -[] tweak spawn time of objects (change based on which one spawned?)
+    -[] make energy bar, can only speed up when bar has energy? -> could use this to let u hold down the speed up button lol
+    -[] would there be a way to scramble the colors on our obstacles for more variety without making a milliion versions manually?
+*/
+/* queer/crip time!
+    obstacles are disappearing at a rate different from your own, faster than your own, casting you out of time, leaving you behind, making you fail
+    to further this: we could make it so the player speed doesn't increase automatically, but the obstacle speed does..? (& max player speed increases automatically)
+    could implement periods of 'rest time' where you aren't allowed to increase your own speed? or something?
 */
 'use strict'
 
+/* colors:
+    - dark: 0b0657
+    - light: fffdc6
+*/
 let config = {
     type: Phaser.AUTO,
     width: 640,

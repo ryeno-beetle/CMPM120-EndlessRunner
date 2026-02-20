@@ -10,5 +10,7 @@ class Obstacle extends Phaser.Physics.Arcade.Sprite {
         this.body.setImmovable(true);
         this.body.setAllowGravity(false);
         this.body.setFriction(0);
+
+        this.disappeared = false;
     }
 }
