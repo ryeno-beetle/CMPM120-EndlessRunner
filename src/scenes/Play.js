@@ -158,6 +158,7 @@ class Play extends Phaser.Scene {
         // check reset key input
         if (Phaser.Input.Keyboard.JustDown(keyRESET)) {
             this.sound.play('tap_sfx', {volume: 0.2});
+            this.music.destroy();
             this.scene.restart();
         }
         // check space key when game is over
@@ -232,7 +233,7 @@ class Play extends Phaser.Scene {
 
     showGameOverScreen() {
         this.music.destroy();
-        
+
         let rect = new Phaser.Geom.Rectangle(0, 0, config.width, config.height);
         let rect2 = new Phaser.Geom.Rectangle(0, 150, config.width, 200);
         this.graphics.fillStyle('0x120531', 0.5);
