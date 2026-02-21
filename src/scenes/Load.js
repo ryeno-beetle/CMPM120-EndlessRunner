@@ -45,9 +45,29 @@ class Load extends Phaser.Scene {
             startFrame: 0,
             endFrame: 9
         });
+        this.load.spritesheet('ghost_sheet', 'ghost/ghost_spritesheet.png', {
+            frameWidth: 47,
+            frameHeight: 68,
+            startFrame: 0,
+            endFrame: 3
+        });
+
         // load bitmap font
-        // original font from https://www.dafont.com/early-gameboy.font
         this.load.bitmapFont('main_font', 'fonts/early_gameboy_font.png', 'fonts/early_gameboy_font.xml')
+        // load normal font
+        this.load.font('long_text_font', 'fonts/dogica.ttf', 'truetype');
+
+        // load audio sfx
+        this.load.audio('foot_1_sfx', '/sfx/foot_1.wav');
+        this.load.audio('foot_2_sfx', '/sfx/foot_2.wav');
+        this.load.audio('foot_3_sfx', '/sfx/foot_3.wav');
+        this.load.audio('foot_4_sfx', '/sfx/foot_4.wav');
+        this.load.audio('fsh_1_sfx', '/sfx/fsh_1.wav');
+        this.load.audio('fsh_2_sfx', '/sfx/fsh_2.wav');
+        this.load.audio('fsh_3_sfx', '/sfx/fsh_3.wav');
+        this.load.audio('bam_sfx', '/sfx/bam.wav');
+        this.load.audio('tap_sfx', '/sfx/tap.wav');
+        this.load.audio('jump_sfx', '/sfx/jump.wav');
     }
 
     create() {
@@ -144,6 +164,24 @@ class Load extends Phaser.Scene {
             frameRate: 1,
             repeat: -1
         });
+
+        // hidden anim
+        this.anims.create({
+            key: 'hidden',
+            frames: this.anims.generateFrameNumbers('bunny_sheet', {start: 9, end: 9, first: 9}),
+            frameRate: 1,
+            repeat: -1
+        });
+
+        // ghost
+        this.anims.create({
+            key: 'ghost',
+            frames: this.anims.generateFrameNumbers('ghost_sheet', {start: 0, end: 3, first: 0}),
+            frameRate: 8,
+            repeat: -1
+        });
+
+
         // start menu
         this.scene.start('menuScene');
     }

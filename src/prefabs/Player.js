@@ -14,17 +14,31 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         // properties
         this.ACCELERATION = 1500;
-        this.MAX_JUMPS = 2;
-        this.JUMP_VELOCITY = -700;
-        this.JUMP_KEY_TIME = 150;
+        this.JUMP_VELOCITY = -1000;
         scene.physics.world.gravity.y = 2600;
-        this.jumps = 0;
 
         // initialize state machine
         scene.pFSM = new StateMachine('runState', {
             runState: new RunState(),
             jumpState: new JumpState()
         }, [scene, this]);
+
+        this.FOOTSTEP_SOUNDS = ['foot_1_sfx', 'foot_2_sfx', 'foot_3_sfx', 'foot_4_sfx'];
+        this.footstepTime = 375 // in ms; 8 fps / 3 frames = 8/3 footsteps/sec; 1 sec / (8/3) = 3/8 seconds
+    }
+
+    startFootsteps(scene) {
+        if (scene.pFSM.state == 'runState' && !scene.gameOver) {
+            // play random footstep sound
+            let footstep = Phaser.Math.Between(0, 3);
+            scene.sound.play(this.FOOTSTEP_SOUNDS[footstep], {volume: 0.1});
+        }
+        // timer for footsteps
+        scene.time.delayedCall(this.footstepTime, () => {
+            if (scene.pFSM.state == 'runState' && !scene.gameOver) {
+                this.startFootsteps(scene);
+            }
+        });
     }
 
 }
@@ -33,14 +47,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
 class RunState extends State {
     enter(scene, player) {
-        console.log('run');
         player.anims.play('run');
+        player.startFootsteps(scene);
         player.y -= player.RUN_SIZE.y - player.JUMP_SIZE.y + 1;
         player.body.setSize(player.RUN_SIZE.x, player.RUN_SIZE.y);
-        player.jumps = 0;
     }
     execute(scene, player) {
-        if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+        if (Phaser.Input.Keyboard.JustDown(keySPACE) || Phaser.Input.Keyboard.JustDown(keyUP)) {
             this.stateMachine.transition('jumpState');
             return;
         }
@@ -49,24 +62,14 @@ class RunState extends State {
 
 class JumpState extends State {
     enter(scene, player) {
-        console.log('jump');
         player.anims.play('jump');
+        scene.sound.play('jump_sfx', {volume: 0.2});
         player.body.setSize(player.JUMP_SIZE.x, player.JUMP_SIZE.y);
-        player.jumps ++;
         player.setVelocity(0, player.JUMP_VELOCITY);
     }
     execute(scene, player) {
-        // jump higher for longer key hold time
-        if(player.jumps < player.MAX_JUMPS && Phaser.Input.Keyboard.DownDuration(keySPACE, player.JUMP_KEY_TIME)) {
-            player.setVelocity(0, player.JUMP_VELOCITY);
-        }
-        // jump again if we press space again!
-        else if (player.jumps < player.MAX_JUMPS && Phaser.Input.Keyboard.JustDown(keySPACE)) {
-            player.jumps ++;
-            player.setVelocity(0, player.JUMP_VELOCITY);
-        }
         // if on ground, go back to run state
-        else if (player.body.touching.down) {
+        if (player.body.touching.down) {
             this.stateMachine.transition('runState');
             return;
         }

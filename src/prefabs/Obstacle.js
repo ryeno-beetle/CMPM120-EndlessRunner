@@ -14,5 +14,12 @@ class Obstacle extends Phaser.Physics.Arcade.Sprite {
         this.body.setFriction(0);
 
         this.disappeared = false;
+
+        this.FSH_SOUNDS = ['fsh_1_sfx', 'fsh_2_sfx', 'fsh_3_sfx'];
+    }
+
+    playDisappearSound(scene) {
+        let fsh = Phaser.Math.Between(0, 2);
+        scene.sound.play(this.FSH_SOUNDS[fsh], {volume: 0.1});
     }
 }

@@ -11,14 +11,14 @@
 /* structure and design:
     -[x] Use multiple Scene classes (dictated by your game's style) (1)
     -[x] Properly transition between Scenes and allow the player to restart w/out having to reload the page (1)
-    -[] Include in-game instructions using text or other means (e.g., tooltips, tutorial, diagram, etc.) (1)
-    -[] Have some form of player input/control appropriate to your game design (1)
-    -[] Include one or more animated characters that use a texture atlas/sprite sheet* (1)
+    -[x] Include in-game instructions using text or other means (e.g., tooltips, tutorial, diagram, etc.) (1)
+    -[x] Have some form of player input/control appropriate to your game design (1)
+    -[x] Include one or more animated characters that use a texture atlas/sprite sheet* (1)
     -[x] Simulate scrolling with a tileSprite (or equivalent means) (1)
     -[x] Implement proper collision detection (via Arcade Physics or a custom routine) (1)
     -[] Have looping background music* (1)
-    -[] Use a minimum of four sound effects for key mechanics, UI, and/or significant events appropriate to your game design (1)
-    -[] Use randomness to generate escalating challenge, e.g. terrain, pickups, etc. (1)
+    -[x] Use a minimum of four sound effects for key mechanics, UI, and/or significant events appropriate to your game design (1)
+    -[x] Use randomness to generate escalating challenge, e.g. terrain, pickups, etc. (1)
     -[x] Include some metric of accomplishment that a player can improve over time, e.g., score, survival time, etc. (1)
     -[x] Be theoretically endless (1)
     -[] Be playable for at least 15 seconds for a new player of low to moderate skill (1)
@@ -38,6 +38,14 @@
     -[] make energy bar, can only speed up when bar has energy? -> could use this to let u hold down the speed up button lol
     -[] would there be a way to scramble the colors on our obstacles for more variety without making a milliion versions manually?
     -[] trip animation for thing
+    -[] customize hit boxes for each obstacle
+    -[] obstacle anims when you jump on it + when you hit it (or flip obstacles around when you run into them so anim goes right way)
+    -[] reset timer on restart
+    -[] maybe get rid of double jump? without an animation it feels weird
+    -[] sound/anim for when we increase our speed?? could modulate color?
+    -[] speed bar case for when we are below minimum speed [should we have a minimum speed? maybe not??]
+    -[] restart go to menu
+    -[] fix up arrow
 */
 /* queer/crip time!
     obstacles are disappearing at a rate different from your own, faster than your own, casting you out of time, leaving you behind, making you fail
@@ -51,6 +59,8 @@
     - light: fffdc6
 */
 // sprite sheet maker used: https://www.finalparsec.com/tools/sprite_sheet_maker
+// font https://www.dafont.com/early-gameboy.font
+// font https://www.dafont.com/dogica.font
 let config = {
     type: Phaser.AUTO,
     width: 640,
@@ -62,10 +72,16 @@ let config = {
             debug: true
         },
     },
-    scene: [Load, Menu, Play]
+    scene: [Load, Menu, Instructions, Play]
 }
 
 let game = new Phaser.Game(config);
 
 // reserve keyboard bindings
-let keyRESET, keyLEFT, keyRIGHT, keySPACE;
+let keyRESET, keyLEFT, keyUP, keyRIGHT, keySPACE;
+
+// global constants
+let UI_DEPTH = 100;
+
+let UI_BG_COLOR = '0x120531';
+let UI_COLOR = '0xf0ffce';
