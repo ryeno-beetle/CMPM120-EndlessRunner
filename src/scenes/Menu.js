@@ -20,9 +20,11 @@ class Menu extends Phaser.Scene {
         };
         this.add.text(config.width / 2, config.height / 2 + 30, 'press  [SPACE]  to start', textConfig).setOrigin(0.5);
         this.add.text(config.width / 2, config.height / 2 + 60, 'or  [I]  for instructions', textConfig).setOrigin(0.5);
+        this.add.text(config.width / 2, config.height / 2 + 90, 'or  [C]  for credits', textConfig).setOrigin(0.5);
         // define keys
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.keyI = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.I);
+        this.keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
     }
 
     update() {
@@ -33,6 +35,10 @@ class Menu extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(this.keyI)) {
             this.sound.play('tap_sfx', {volume: 0.2});
             this.scene.start('instructionsScene');
+        }
+        if (Phaser.Input.Keyboard.JustDown(this.keyC)) {
+            this.sound.play('tap_sfx', {volume: 0.2});
+            this.scene.start('creditsScene');
         }
     }
 }

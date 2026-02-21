@@ -1,11 +1,11 @@
-class Instructions extends Phaser.Scene {
+class Credits extends Phaser.Scene {
     constructor() {
-        super("instructionsScene");
+        super("creditsScene");
     }
 
     create() {
-        // display instructions text
-        this.add.bitmapText(50, 50, 'main_font', 'INSTRUCTIONS', 25);
+        // display credits text
+        this.add.bitmapText(50, 50, 'main_font', 'CREDITS', 25);
 
         // text config
         let textConfig = {
@@ -22,8 +22,8 @@ class Instructions extends Phaser.Scene {
             },
             lineSpacing: 5
         };
-        this.add.text(50, 100, 'SPACE / UP  -  jump\nLEFT        -  increase speed', textConfig);
-        this.add.text(50, 160, `you've fallen out of sync. things might disappear from sight, but they are still there.\n\n[obstacles will disappear at their own speed (the pace of the bunny-ghost), which will increase over time. Your speed will decrease if left alone, but you can use energy to increase your speed and keep up with the spot at which things disappear. don't fall too far behind.]`, textConfig);
+        this.add.text(50, 100, 'all art and sound by me !', textConfig);
+        this.add.text(50, 160, `main font: early gameboy by jimmy campbell (dafont.com/early-gameboy.font)\n\nsub font: dogica by roberto mocci (dafont.com/dogica.font)`, textConfig);
         textConfig.fontSize = 13;
         this.add.text(50, 430, 'press SPACE to return to menu', textConfig);
         // define keys

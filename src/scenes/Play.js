@@ -82,7 +82,9 @@ class Play extends Phaser.Scene {
 
         this.elapsedTime = 0;
 
-        // EVENTS
+        // music!
+        this.music = this.sound.add('music', {volume: 0.5, loop: true, delay: 0});
+        this.music.play();
     }
 
     update(time, delta) {
@@ -229,6 +231,8 @@ class Play extends Phaser.Scene {
     }
 
     showGameOverScreen() {
+        this.music.destroy();
+        
         let rect = new Phaser.Geom.Rectangle(0, 0, config.width, config.height);
         let rect2 = new Phaser.Geom.Rectangle(0, 150, config.width, 200);
         this.graphics.fillStyle('0x120531', 0.5);

@@ -1,66 +1,22 @@
-// Rye Donaldson
-// [Endless Runner]
-// time estimate: 
-/* creative tilt justification: */
+// rye donaldson
+// endlessly async
+// time estimate: 30 hrs ??
 
-/* organization:
-    -[] Submit a link to your GitHub repository that shows a history of multiple meaningful commits with descriptive messages (1)
-    -[] Submit a playable link on GitHub pages (1)
-    -[] In main.js (or equivalent), include a comment header with your name, game title, approximate hours spent on project, and your creative tilt justification (see below) (1)
-*/
-/* structure and design:
-    -[x] Use multiple Scene classes (dictated by your game's style) (1)
-    -[x] Properly transition between Scenes and allow the player to restart w/out having to reload the page (1)
-    -[x] Include in-game instructions using text or other means (e.g., tooltips, tutorial, diagram, etc.) (1)
-    -[x] Have some form of player input/control appropriate to your game design (1)
-    -[x] Include one or more animated characters that use a texture atlas/sprite sheet* (1)
-    -[x] Simulate scrolling with a tileSprite (or equivalent means) (1)
-    -[x] Implement proper collision detection (via Arcade Physics or a custom routine) (1)
-    -[] Have looping background music* (1)
-    -[x] Use a minimum of four sound effects for key mechanics, UI, and/or significant events appropriate to your game design (1)
-    -[x] Use randomness to generate escalating challenge, e.g. terrain, pickups, etc. (1)
-    -[x] Include some metric of accomplishment that a player can improve over time, e.g., score, survival time, etc. (1)
-    -[x] Be theoretically endless (1)
-    -[] Be playable for at least 15 seconds for a new player of low to moderate skill (1)
-    -[] Run without significant crashes or errors (1)
-    -[] Include in-game credits for all roles, assets, music, etc. (1)
-*/
-/* creative tilt: does your game...
-    -[] ...do something technically interesting? Are you particularly proud of a programming technique you implemented? Did you look beyond the class examples and learn how to do something new? (1)
-    -[] ...have a great visual style? Does it use music or art that you're particularly proud of? Are you trying something new or clever with the endless runner form? (1)
-*/
-/* todo:
-    -[] fix looping of bg art (floor)
-    -[] make head bonk on right part of ceiling
-    -[] use bitmap text for frequently updating ui
-    -[] tweak params so speed increase feels good
-    -[] tweak spawn time of objects (change based on which one spawned?)
-    -[] make energy bar, can only speed up when bar has energy? -> could use this to let u hold down the speed up button lol
-    -[] would there be a way to scramble the colors on our obstacles for more variety without making a milliion versions manually?
-    -[] trip animation for thing
-    -[] customize hit boxes for each obstacle
-    -[] obstacle anims when you jump on it + when you hit it (or flip obstacles around when you run into them so anim goes right way)
-    -[] reset timer on restart
-    -[] maybe get rid of double jump? without an animation it feels weird
-    -[] sound/anim for when we increase our speed?? could modulate color?
-    -[] speed bar case for when we are below minimum speed [should we have a minimum speed? maybe not??]
-    -[] restart go to menu
-    -[] fix up arrow
-*/
-/* queer/crip time!
-    obstacles are disappearing at a rate different from your own, faster than your own, casting you out of time, leaving you behind, making you fail
-    to further this: we could make it so the player speed doesn't increase automatically, but the obstacle speed does..? (& max player speed increases automatically)
-    could implement periods of 'rest time' where you aren't allowed to increase your own speed? or something?
+/* creative tilt justification:
+
+technically interesting: I used a lot of math to compare the speeds of the player/the point obstacles disappear at,
+    and I also used delta time to convert between px/frame and px/sec so that arcade physics velocity and manual movement
+    of the tilesprite background would match up properly, which took some time to figure out. 
+
+something new with the endless runner form: I've been doing a lot of reading on queer theory and queer games since coming to
+    college, and so I really wanted to try and 'queer' the endless runner form by disrupting the norms surrounding it. 
+    Usually in endless runners, the obstacles disappear after leaving the screen, and so instead I experimented with having 
+    them (visually) disappear before the player actually gets to them. This also let me connect ideas of queer/crip time - 
+    the player is cast 'out of sync', or out of normative time, made to feel behind and anxious to catch up, but never quite 
+    being able to, a feeling many queer/disabled people have.
 */
 'use strict'
 
-/* colors:
-    - dark: 0b0657
-    - light: fffdc6
-*/
-// sprite sheet maker used: https://www.finalparsec.com/tools/sprite_sheet_maker
-// font https://www.dafont.com/early-gameboy.font
-// font https://www.dafont.com/dogica.font
 let config = {
     type: Phaser.AUTO,
     width: 640,
@@ -72,7 +28,7 @@ let config = {
             debug: true
         },
     },
-    scene: [Load, Menu, Instructions, Play]
+    scene: [Load, Menu, Instructions, Credits, Play]
 }
 
 let game = new Phaser.Game(config);

@@ -68,6 +68,8 @@ class Load extends Phaser.Scene {
         this.load.audio('bam_sfx', '/sfx/bam.wav');
         this.load.audio('tap_sfx', '/sfx/tap.wav');
         this.load.audio('jump_sfx', '/sfx/jump.wav');
+
+        this.load.audio('music', 'song.wav');
     }
 
     create() {
